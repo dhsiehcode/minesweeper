@@ -54,15 +54,36 @@ def local_has_mine(i, j):
            board[i - 1][j] == 'x' or board[i + 1][j] or board[i - 1][j + 1] or board[i][j + 1] or board[i + 1][j + 1]
 
 
-
+# sets up the board with mines
 
 def set_up():
 
 
-
+    counter = 0
     mines_planted = 0
     total_mines = 10
-    a = random.randint(1, 10) #inclusive [1, 10]
+    # 2 D list with all locations of the bombs
+    loc = [[0] * 2] * 10
 
     while total_mines != 0:
-        for
+        row = random.randint(0, 8)
+        col = random.randint(0, 8)
+        a = random.randint(1, 10)
+        if local_has_mine(row, col):
+            bound = 6
+        else:
+            bound = 3
+
+        # add mine
+        if a > bound:
+            board[row][col] = 'x'
+            mines_planted += 1
+            total_mines -= 1
+            loc[counter][0] = row
+            loc[counter][1] = col
+            counter += 1
+
+    return loc
+
+
+
