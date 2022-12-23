@@ -21,6 +21,16 @@ board = [['','','','','','','','',''],
          ['','','','','','','','',''],
          ['','','','','','','','','']]
 
+playing_board = [['','','','','','','','',''],
+         ['','','','','','','','',''],
+         ['','','','','','','','',''],
+         ['','','','','','','','',''],
+         ['','','','','','','','',''],
+         ['','','','','','','','',''],
+         ['','','','','','','','',''],
+         ['','','','','','','','',''],
+         ['','','','','','','','','']]
+
 # returns if there are mines locally around i, j
 def local_has_mine(i, j):
     # the four corners
@@ -52,6 +62,17 @@ def local_has_mine(i, j):
     # all 8 corners
     return board[i][j] == 'x' or board[i - 1][j - 1] == 'x' or board[i][j - 1] == 'x' or board[i + 1][j - 1] or \
            board[i - 1][j] == 'x' or board[i + 1][j] or board[i - 1][j + 1] or board[i][j + 1] or board[i + 1][j + 1]
+
+def num_local_mines(row, col):
+    total = 0
+    for i in range(2):
+        for j in range(2):
+            if (not row - 1 + i < 0 and not col - 1 + j < 0) and (not row - 1 + i > 8 and not col - 1 + j > 8):
+                if board[i][j] == 'x':
+                    total += 1
+
+    return total
+
 
 
 # sets up the board with mines
@@ -87,3 +108,25 @@ def set_up():
 
 
 
+# displays the board
+def display_playing_board():
+    for i in range(8):
+        for j in range(8):
+            print(playing_board[i][j] + ', ')
+        print(' \n')
+
+# displays the board
+def display_board():
+    for i in range(8):
+        for j in range(8):
+            count = 0
+            if board[i][j] == 'x':
+                print('x')
+            elif not num_local_mines(i, j) == 0:
+                print(num_local_mines())
+            else:
+                print(' ')
+            if not j == 8:
+                print(', ')
+            else:
+                print(' \n')
