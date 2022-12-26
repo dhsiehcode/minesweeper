@@ -2,6 +2,9 @@ import game_manager
 
 game_manager.set_up() # sets up board
 
+print('Here is the board: \n')
+game_manager.display_playing_board()
+
 while True:
 
     i = input('Please enter row (i value) of desired target: ')

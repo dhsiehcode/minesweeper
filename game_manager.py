@@ -112,7 +112,7 @@ def set_up():
         # add mine
         if a > bound:
             board[row][col] = 'x'
-            playing_board[row][col] = 'x'
+            #playing_board[row][col] = 'x'
             mines_planted += 1
             total_mines -= 1
             loc[counter][0] = row
@@ -204,8 +204,8 @@ def DFS(i, j):
 def display_playing_board():
     for i in range(9):
         for j in range(9):
-            print(playing_board[i][j] + ', ')
-        print(' \n')
+            print(playing_board[i][j] + ",", end = " ")
+        print('\n')
 
 # displays the board
 def display_board():
@@ -213,12 +213,10 @@ def display_board():
         for j in range(9):
             count = 0
             if board[i][j] == 'x':
-                print('x')
+                print("x,", end = " ")
             elif not num_local_mines(i, j) == 0:
-                print(num_local_mines())
-            else:
-                print(' ')
-            if not j == 8:
+                print(num_local_mines() + ", ", end = " ")
+            elif not j == 8:
                 print(', ')
             else:
-                print(' \n')
+                print(" ")
