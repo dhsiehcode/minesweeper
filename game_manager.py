@@ -165,8 +165,8 @@ def move(i, j):
     # will go through one more time to calculate number for corners
     for row in range(8):
         for col in range(8):
-            if local_has_mine(row + 1, col + 1) > 0:
-                playing_board[i][j] == local_has_mine(row + 1, col + 1)
+            if local_has_mine(row + 1, col + 1):
+                playing_board[i][j] = format("%d", str(num_local_mines(row + 1, col + 1)))
 
 
 def DFS(i, j):
@@ -193,9 +193,9 @@ def DFS(i, j):
         DFS(i, j - 1)
         DFS(i + 1, j)
         DFS(i, j + 1)
-        playing_board[i][j] == ' '
+        playing_board[i][j] = ' '
     else:
-        playing_board[i][j] == format('%s', num)
+        playing_board[i][j] = format('%s', str(num))
         return
 
 
@@ -211,12 +211,5 @@ def display_playing_board():
 def display_board():
     for i in range(9):
         for j in range(9):
-            count = 0
-            if board[i][j] == 'x':
-                print("x,", end = " ")
-            elif not num_local_mines(i, j) == 0:
-                print(num_local_mines() + ", ", end = " ")
-            elif not j == 8:
-                print(', ')
-            else:
-                print(" ")
+            print(board[i][j] + ",", end = " ")
+        print('\n')

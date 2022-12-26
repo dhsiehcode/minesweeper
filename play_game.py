@@ -2,15 +2,16 @@ import game_manager
 
 game_manager.set_up() # sets up board
 
-print('Here is the board: \n')
+print('Here is the board: ')
 game_manager.display_playing_board()
 
 while True:
 
     i = input('Please enter row (i value) of desired target: ')
-    print('\n')
     j = input('Please enter column (j value) of desired target: ')
-    print('\n')
+
+    i = int(i)
+    j = int(j)
 
     if game_manager.move(i, j):
         game_manager.display_playing_board()
