@@ -160,6 +160,34 @@ playing_board = [['z','z','z','z','z','z','z','z','x'],
                  ['z','x','1',' ',' ',' ','1','2','x']]
 '''
 
+# TODO check if this method works
+
+def first_move(i, j):
+
+    # special case when first move lands on mine
+    if board[i][j] == 'x':
+        for row in range(8):
+            for col in range(8):
+                if not row == i and not col == j and not board[row][col] == 'x':
+                    board[i][j] = ''
+                    board[row][col] = 'x'
+                    break
+            if not board[i][j] == 'x':
+                break
+
+    # special case when surrounding has mines
+
+    if local_has_mine(i, j):
+        playing_board[i][j] == local_has_mine(i, j)
+        for row in range(3):
+            for col in range(3):
+                if (row - 1 + i > 0 and row - 1 + i < 9) and (col - 1 + j > 0 and col - 1 + j < 9):
+                    num = local_has_mine(row - 1 + i, col - 1 + j)
+                    if not num == 0:
+                        playing_board[row - 1 + i][col - 1 + j] = "{}".format(num)
+
+    move(i, j)
+
 
 def move(i, j):
     if board[i][j] == 'x':
@@ -167,8 +195,6 @@ def move(i, j):
 
     # perform DFS in all directions and stops when a block has 0 adjacent
     DFS(i, j)
-
-    display_playing_board()
 
     # will go through one more time to calculate number for corners
     for row in range(6):
@@ -186,7 +212,7 @@ def move(i, j):
 def fill_adjacent_of_mine(row, col):
     for i in range(3):
         for j in range(3):
-            if (row - 1 + i > 0 and row - 1 + i < 9) and (col - 1 + j > 0 and col - 1 + j < 8):
+            if (row - 1 + i > 0 and row - 1 + i < 9) and (col - 1 + j > 0 and col - 1 + j < 9):
                 if playing_board[row - 1 + i][col - 1 + j] == '-':
                     playing_board[row][col] = num_local_mines(row, col)
 
@@ -203,7 +229,7 @@ def DFS(i, j):
 
     visited[i][j] = True
 
-    if playing_board[i][j] == 'x':
+    if board[i][j] == 'x':
         return
 
     num = num_local_mines(i, j)

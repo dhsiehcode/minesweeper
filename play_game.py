@@ -5,6 +5,8 @@ game_manager.set_up() # sets up board
 print('Here is the board: ')
 game_manager.display_playing_board()
 
+game_manager.f
+
 while True:
 
     i = input('Please enter row (i value) of desired target: ')
