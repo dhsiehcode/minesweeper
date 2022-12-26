@@ -1,6 +1,5 @@
 import random
 
-
 '''
 
 sets up a 9 x 9 board
@@ -10,35 +9,36 @@ TODO: find algorithm to disperse mines
 
 '''
 
+board = [['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', '']]
 
-board = [['','','','','','','','',''],
-         ['','','','','','','','',''],
-         ['','','','','','','','',''],
-         ['','','','','','','','',''],
-         ['','','','','','','','',''],
-         ['','','','','','','','',''],
-         ['','','','','','','','',''],
-         ['','','','','','','','',''],
-         ['','','','','','','','','']]
+playing_board = [['z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z'],
+                 ['z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z'],
+                 ['z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z'],
+                 ['z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z'],
+                 ['z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z'],
+                 ['z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z'],
+                 ['z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z'],
+                 ['z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z'],
+                 ['z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z']]
 
-playing_board = [['z','z','z','z','z','z','z','z','z'],
-                 ['z','z','z','z','z','z','z','z','z'],
-                 ['z','z','z','z','z','z','z','z','z'],
-                 ['z','z','z','z','z','z','z','z','z'],
-                 ['z','z','z','z','z','z','z','z','z'],
-                 ['z','z','z','z','z','z','z','z','z'],
-                 ['z','z','z','z','z','z','z','z','z'],
-                 ['z','z','z','z','z','z','z','z','z'],
-                 ['z','z','z','z','z','z','z','z','z']]
+visited = [[False, False, False, False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False],
+           [False, False, False, False, False, False, False, False, False]]
 
-visited = [[False, False, False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False],
-           [False, False, False, False, False, False, False, False]]
 
 # returns if there are mines locally around i, j
 def local_has_mine(i, j):
@@ -51,7 +51,7 @@ def local_has_mine(i, j):
     elif i == 8 and j == 0:
         return board[i][j] == 'x' or board[i][j + 1] == 'x' or board[i - 1][j] == 'x' or board[i - 1][j + 1]
     elif i == 8 and j == 8:
-        return  board[i][j] == 'x' or board[i - 1][j] == 'x' or board[i][j - 1] == 'x' or board[i - 1][j - 1]
+        return board[i][j] == 'x' or board[i - 1][j] == 'x' or board[i][j - 1] == 'x' or board[i - 1][j - 1]
 
     # on the walls
     if i == 0:
@@ -72,28 +72,32 @@ def local_has_mine(i, j):
     return board[i][j] == 'x' or board[i - 1][j - 1] == 'x' or board[i][j - 1] == 'x' or board[i + 1][j - 1] or \
            board[i - 1][j] == 'x' or board[i + 1][j] or board[i - 1][j + 1] or board[i][j + 1] or board[i + 1][j + 1]
 
+
 def num_local_mines(row, col):
     total = 0
     for i in range(3):
         for j in range(3):
-            if (not row - 1 + i < 0 and not col - 1 + j < 0) and (not row - 1 + i > 8 and not col - 1 + j > 8):
-                if board[col - 1 + i][row - 1 + j] == 'x':
+            if (row - 1 + i > 0 and row - 1 + i < 9) and (col - 1 + j > 0 and col - 1 + j < 8):
+                # print(row - 1 + i)
+                # print(col - 1 + i)
+                if board[row - 1 + i][col - 1 + j] == 'x':
                     total += 1
 
     return total
 
+
 def local_has_blank(row, col):
     for i in range(3):
         for j in range(3):
-            if board[col - 1 + i][row - 1 + j] == ' ':
+            if playing_board[row - 1 + i][col - 1 + j] == '-':
                 return True
+
+    return False
 
 
 # sets up the board with mines
 
 def set_up():
-
-
     counter = 0
     mines_planted = 0
     total_mines = 10
@@ -112,7 +116,7 @@ def set_up():
         # add mine
         if a > bound:
             board[row][col] = 'x'
-            #playing_board[row][col] = 'x'
+            # playing_board[row][col] = 'x'
             mines_planted += 1
             total_mines -= 1
             loc[counter][0] = row
@@ -120,6 +124,7 @@ def set_up():
             counter += 1
 
     return loc
+
 
 '''
 playing_board = [['z','z','z','z','z','z','z','z','z'],
@@ -155,6 +160,7 @@ playing_board = [['z','z','z','z','z','z','z','z','x'],
                  ['z','x','1',' ',' ',' ','1','2','x']]
 '''
 
+
 def move(i, j):
     if board[i][j] == 'x':
         return False
@@ -162,15 +168,30 @@ def move(i, j):
     # perform DFS in all directions and stops when a block has 0 adjacent
     DFS(i, j)
 
+    display_playing_board()
+
     # will go through one more time to calculate number for corners
-    for row in range(8):
-        for col in range(8):
-            if local_has_mine(row + 1, col + 1):
-                playing_board[i][j] = format("%d", str(num_local_mines(row + 1, col + 1)))
+    for row in range(6):
+        for col in range(6):
+            if local_has_blank(row + 1, col + 1) and local_has_mine(row + 1, col + 1) and playing_board[row + 1][
+                col + 1] == 'z':
+                if board[row + 1][col + 1] == 'x':
+                    fill_adjacent_of_mine(row + 1, col + 1)
+                else:
+                    playing_board[row][col] = "{}".format(num_local_mines(row + 1, col + 1))
+
+    return True
+
+
+def fill_adjacent_of_mine(row, col):
+    for i in range(3):
+        for j in range(3):
+            if (row - 1 + i > 0 and row - 1 + i < 9) and (col - 1 + j > 0 and col - 1 + j < 8):
+                if playing_board[row - 1 + i][col - 1 + j] == '-':
+                    playing_board[row][col] = num_local_mines(row, col)
 
 
 def DFS(i, j):
-
     if i < 0 or i > 8:
         return
 
@@ -187,29 +208,28 @@ def DFS(i, j):
 
     num = num_local_mines(i, j)
 
-
     if playing_board[i][j] == 'z' and num == 0:
         DFS(i - 1, j)
         DFS(i, j - 1)
         DFS(i + 1, j)
         DFS(i, j + 1)
-        playing_board[i][j] = ' '
+        playing_board[i][j] = '-'
     else:
-        playing_board[i][j] = format('%s', str(num))
+        playing_board[i][j] = "{}".format(num)
         return
-
 
 
 # displays the board
 def display_playing_board():
     for i in range(9):
         for j in range(9):
-            print(playing_board[i][j] + ",", end = " ")
+            print(playing_board[i][j] + ",", end=" ")
         print('\n')
+
 
 # displays the board
 def display_board():
     for i in range(9):
         for j in range(9):
-            print(board[i][j] + ",", end = " ")
+            print(board[i][j] + ",", end=" ")
         print('\n')
