@@ -13,6 +13,8 @@ j = int(j)
 
 game_manager.first_move(i, j)
 
+game_manager.display_playing_board()
+
 while True:
 
     i = input('Please enter row (i value) of desired target: ')
