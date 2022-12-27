@@ -247,7 +247,7 @@ def DFS(i, j):
 def display_playing_board():
     for i in range(9):
         for j in range(9):
-            print(playing_board[i][j] + ",", end=" ")
+            print(str(playing_board[i][j]) + ",", end="")
         print('\n')
 
 
@@ -255,5 +255,5 @@ def display_playing_board():
 def display_board():
     for i in range(9):
         for j in range(9):
-            print(board[i][j] + ",", end=" ")
+            print(board[i][j] + " ,", end="")
         print('\n')
