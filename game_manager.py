@@ -41,43 +41,21 @@ visited = [[False, False, False, False, False, False, False, False, False],
 
 
 # returns if there are mines locally around i, j
-def local_has_mine(i, j):
-    # the four corners
+def local_has_mine(row, col):
+    for i in range(3):
+        for j in range(3):
+            if (row - 1 + i >= 0 and row - 1 + i < 9) and (col - 1 + j >= 0 and col - 1 + j < 9):
+                if board[row - 1 + i][col - 1 + j] == 'x':
+                    return True
 
-    if i == 0 and j == 0:
-        return board[i][j] == 'x' or board[i + 1][j] == 'x' or board[i][j + 1] == 'x' or board[i + 1][j + 1]
-    elif i == 0 and j == 8:
-        return board[i][j] == 'x' or board[i][j - 1] == 'x' or board[i + 1][j] == 'x' or board[i + 1][j - 1]
-    elif i == 8 and j == 0:
-        return board[i][j] == 'x' or board[i][j + 1] == 'x' or board[i - 1][j] == 'x' or board[i - 1][j + 1]
-    elif i == 8 and j == 8:
-        return board[i][j] == 'x' or board[i - 1][j] == 'x' or board[i][j - 1] == 'x' or board[i - 1][j - 1]
-
-    # on the walls
-    if i == 0:
-        return board[i][j - 1] == 'x' or board[i][j] == 'x' or board[i][j + 1] or board[i + 1][j - 1] == 'x' or \
-               board[i + 1][j] == 'x' or board[i + 1][j + 1]
-    elif i == 8:
-        return board[i][j - 1] == 'x' or board[i][j] == 'x' or board[i][j + 1] or board[i - 1][j - 1] == 'x' or \
-               board[i - 1][j] == 'x' or board[i - 1][j + 1]
-
-    elif j == 0:
-        return board[i - 1][j] == 'x' or board[i][j] == 'x' or board[i + 1][j] or board[i - 1][j + 1] == 'x' or \
-               board[i][j + 1] == 'x' or board[i + 1][j + 1]
-    elif j == 8:
-        return board[i - 1][j] == 'x' or board[i][j] == 'x' or board[i + 1][j] or board[i + 1][j - 1] == 'x' or \
-               board[i][j - 1] == 'x' or board[i + 1][j - 1]
-
-    # all 8 corners
-    return board[i][j] == 'x' or board[i - 1][j - 1] == 'x' or board[i][j - 1] == 'x' or board[i + 1][j - 1] or \
-           board[i - 1][j] == 'x' or board[i + 1][j] or board[i - 1][j + 1] or board[i][j + 1] or board[i + 1][j + 1]
+    return False
 
 
 def num_local_mines(row, col):
     total = 0
     for i in range(3):
         for j in range(3):
-            if (row - 1 + i > 0 and row - 1 + i < 9) and (col - 1 + j > 0 and col - 1 + j < 8):
+            if (row - 1 + i >= 0 and row - 1 + i < 9) and (col - 1 + j >= 0 and col - 1 + j < 9):
                 # print(row - 1 + i)
                 # print(col - 1 + i)
                 if board[row - 1 + i][col - 1 + j] == 'x':
@@ -89,8 +67,9 @@ def num_local_mines(row, col):
 def local_has_blank(row, col):
     for i in range(3):
         for j in range(3):
-            if playing_board[row - 1 + i][col - 1 + j] == '-':
-                return True
+            if (row - 1 + i >= 0 and row - 1 + i < 9) and (col - 1 + j >= 0 and col - 1 + j < 9):
+                if playing_board[row - 1 + i][col - 1 + j] == '-':
+                    return True
 
     return False
 
