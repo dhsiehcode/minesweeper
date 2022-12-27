@@ -156,14 +156,16 @@ def first_move(i, j):
 
     # special case when surrounding has mines
 
-    if local_has_mine(i, j):
-        playing_board[i][j] == local_has_mine(i, j)
-        for row in range(3):
-            for col in range(3):
-                if (row - 1 + i > 0 and row - 1 + i < 9) and (col - 1 + j > 0 and col - 1 + j < 9):
-                    num = local_has_mine(row - 1 + i, col - 1 + j)
-                    if not num == 0:
-                        playing_board[row - 1 + i][col - 1 + j] = "{}".format(num)
+    #if local_has_mine(i, j):
+     #   playing_board[i][j] = num_local_mines(i, j)
+      #  visited[i][j] = True
+       # for row in range(3):
+        #    for col in range(3):
+         #       if (row - 1 + i > 0 and row - 1 + i < 9) and (col - 1 + j > 0 and col - 1 + j < 9):
+          #          num = num_local_mines(row - 1 + i, col - 1 + j)
+           #         if not num == 0:
+            #            visited[row - 1 + i][col - 1 + j] = True
+             #           playing_board[row - 1 + i][col - 1 + j] = "{}".format(num)
 
     move(i, j)
 
@@ -175,15 +177,31 @@ def move(i, j):
     # perform DFS in all directions and stops when a block has 0 adjacent
     DFS(i, j)
 
+    # makes sure all mines are surrounded by numbers
+
+    for row in range(9):
+        for col in range(9):
+            #print(" " + str(row) + " " + str(col) + " : " + board[row][col] + " " + str(local_has_blank(row, col)))
+            if board[row][col] == 'x' and local_has_blank(row, col):
+
+                fill_adjacent_of_mine(row, col)
+
+    #display_playing_board()
+
     # will go through one more time to calculate number for corners
-    for row in range(6):
-        for col in range(6):
-            if local_has_blank(row + 1, col + 1) and local_has_mine(row + 1, col + 1) and playing_board[row + 1][
-                col + 1] == 'z':
-                if board[row + 1][col + 1] == 'x':
-                    fill_adjacent_of_mine(row + 1, col + 1)
+    for row in range(9):
+        for col in range(9):
+            #print(" " + str(row) + " " + str(col) + " : " + str(local_has_mine(row, col)) + " " + str(playing_board[row][
+                #col] ) + " " + str(local_has_blank(row, col)) )
+            if local_has_blank(row, col) and local_has_mine(row, col) and playing_board[row][
+                col] == 'z':
+                if board[row][col] == 'x':
+                    fill_adjacent_of_mine(row, col)
                 else:
-                    playing_board[row][col] = "{}".format(num_local_mines(row + 1, col + 1))
+                    playing_board[row][col] = "{}".format(num_local_mines(row, col))
+            elif local_has_blank(row, col) and not local_has_mine(row, col) and playing_board[row][
+                col] == 'z':
+                move(row, col)
 
     return True
 
@@ -191,9 +209,10 @@ def move(i, j):
 def fill_adjacent_of_mine(row, col):
     for i in range(3):
         for j in range(3):
-            if (row - 1 + i > 0 and row - 1 + i < 9) and (col - 1 + j > 0 and col - 1 + j < 9):
-                if playing_board[row - 1 + i][col - 1 + j] == '-':
-                    playing_board[row][col] = num_local_mines(row, col)
+            if (row - 1 + i >= 0 and row - 1 + i < 9) and (col - 1 + j >= 0 and col - 1 + j < 9):
+                if playing_board[row - 1 + i][col - 1 + j] == '-' and not board[row - 1 + i][col - 1 + j] == 'x':
+                    #print("replacing - at " + str(row - 1 + i) + " ," + str(col - 1 + j) + " with " + str(num_local_mines(row - 1 + i, col - 1 + j)))
+                    playing_board[row - 1 + i][col - 1 + j] = num_local_mines(row - 1 + i, col - 1 + j)
 
 
 def DFS(i, j):
