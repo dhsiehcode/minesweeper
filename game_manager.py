@@ -39,6 +39,19 @@ visited = [[False, False, False, False, False, False, False, False, False],
            [False, False, False, False, False, False, False, False, False],
            [False, False, False, False, False, False, False, False, False]]
 
+'''
+Helper methods
+'''
+
+
+def legal_input(i, j):
+    if i < 0 or i > 8 or j < 0 or j > 8:
+        return False
+
+    if not playing_board[i][j] == 'z':
+        return False
+
+    return True
 
 # returns if there are mines locally around i, j
 def local_has_mine(row, col):
@@ -73,6 +86,10 @@ def local_has_blank(row, col):
 
     return False
 
+
+'''
+Actual game manager methods
+'''
 
 # sets up the board with mines
 
