@@ -260,6 +260,16 @@ def DFS(i, j):
         return
 
 
+# TODO check if player won game
+
+def is_game_won():
+    for i in range(9):
+        for j in range(9):
+            if playing_board[i][j] == 'z' and not board[i][j] == 'x':
+                return False
+
+    return True
+
 # displays the board
 def display_playing_board():
     for i in range(9):

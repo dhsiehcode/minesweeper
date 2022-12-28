@@ -53,5 +53,10 @@ while True:
         game_manager.display_board()
         break
 
+    if game_manager.is_game_won():
+        print('you won.')
+        break
+
+
 
 
