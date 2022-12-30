@@ -156,7 +156,14 @@ playing_board = [['z','z','z','z','z','z','z','z','x'],
                  ['z','x','1',' ',' ',' ','1','2','x']]
 '''
 
-# TODO check if this method works
+def mark_mine(i, j):
+    if playing_board[i][j] == 'z':
+        playing_board[i][j] == 'f'
+
+def unmark_mine(i, j):
+    if playing_board[i][j] == 'f':
+        playing_board[i][j] == 'z'
+
 
 def first_move(i, j):
 
@@ -216,8 +223,8 @@ def move(i, j):
                     fill_adjacent_of_mine(row, col)
                 else:
                     playing_board[row][col] = "{}".format(num_local_mines(row, col))
-            elif local_has_blank(row, col) and not local_has_mine(row, col) and playing_board[row][
-                col] == 'z':
+            elif local_has_blank(row, col) and not local_has_mine(row, col) and (playing_board[row][
+                col] == 'z' or playing_board[row][col] == 'f'):
                 move(row, col)
 
     return True
@@ -249,7 +256,7 @@ def DFS(i, j):
 
     num = num_local_mines(i, j)
 
-    if playing_board[i][j] == 'z' and num == 0:
+    if (playing_board[i][j] == 'z' or playing_board[i][j] == 'f') and num == 0:
         DFS(i - 1, j)
         DFS(i, j - 1)
         DFS(i + 1, j)
@@ -265,7 +272,7 @@ def DFS(i, j):
 def is_game_won():
     for i in range(9):
         for j in range(9):
-            if playing_board[i][j] == 'z' and not board[i][j] == 'x':
+            if (playing_board[i][j] == 'z' or playing_board[i][j] == 'f') and not board[i][j] == 'x':
                 return False
 
     return True
