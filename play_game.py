@@ -1,6 +1,10 @@
 import game_manager
 
-game_manager.set_up() # sets up board
+# comment out below line and empty board in game_manager for testing
+#game_manager.set_up() # sets up board
+
+# TODO allow marking on first and subsequence steps
+# TODO allow un-marking
 
 print('Here is the board: ')
 game_manager.display_playing_board()

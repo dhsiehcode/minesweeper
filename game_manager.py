@@ -9,6 +9,21 @@ TODO: find algorithm to disperse mines
 
 '''
 
+# testing board with preset mines
+
+'''
+board = [['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', '', '', ''],
+         ['', '', '', '', '', '', 'x', '', 'x']]
+'''
+
+#'''
 board = [['', '', '', '', '', '', '', '', ''],
          ['', '', '', '', '', '', '', '', ''],
          ['', '', '', '', '', '', '', '', ''],
@@ -18,6 +33,7 @@ board = [['', '', '', '', '', '', '', '', ''],
          ['', '', '', '', '', '', '', '', ''],
          ['', '', '', '', '', '', '', '', ''],
          ['', '', '', '', '', '', '', '', '']]
+#'''
 
 playing_board = [['z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z'],
                  ['z', 'z', 'z', 'z', 'z', 'z', 'z', 'z', 'z'],
@@ -156,7 +172,6 @@ playing_board = [['z','z','z','z','z','z','z','z','x'],
                  ['z','x','1',' ',' ',' ','1','2','x']]
 '''
 
-# TODO check if this method works
 
 def first_move(i, j):
 
@@ -170,19 +185,6 @@ def first_move(i, j):
                     break
             if not board[i][j] == 'x':
                 break
-
-    # special case when surrounding has mines
-
-    #if local_has_mine(i, j):
-     #   playing_board[i][j] = num_local_mines(i, j)
-      #  visited[i][j] = True
-       # for row in range(3):
-        #    for col in range(3):
-         #       if (row - 1 + i > 0 and row - 1 + i < 9) and (col - 1 + j > 0 and col - 1 + j < 9):
-          #          num = num_local_mines(row - 1 + i, col - 1 + j)
-           #         if not num == 0:
-            #            visited[row - 1 + i][col - 1 + j] = True
-             #           playing_board[row - 1 + i][col - 1 + j] = "{}".format(num)
 
     move(i, j)
 
@@ -245,6 +247,7 @@ def DFS(i, j):
     visited[i][j] = True
 
     if board[i][j] == 'x':
+        #print('skipped ' + str(i) + " " + str(j))
         return
 
     num = num_local_mines(i, j)
@@ -259,8 +262,6 @@ def DFS(i, j):
         playing_board[i][j] = "{}".format(num)
         return
 
-
-# TODO check if player won game
 
 def is_game_won():
     for i in range(9):
