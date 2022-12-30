@@ -27,7 +27,6 @@ while not game_manager.legal_input(i, j):
     i = int(i)
     j = int(j)
 
-
 game_manager.first_move(i, j)
 
 game_manager.display_playing_board()
