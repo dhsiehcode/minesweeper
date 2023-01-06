@@ -56,6 +56,28 @@ visited = [[False, False, False, False, False, False, False, False, False],
            [False, False, False, False, False, False, False, False, False]]
 
 '''
+String Methods
+'''
+
+def board_to_string():
+    output = ""
+    for i in range(9):
+        for j in range(9):
+            output += playing_board[i][j]
+        output += ','
+
+
+def bomb_to_string():
+    output = ""
+    for i in range(9):
+        for j in range(9):
+            if not board[i][j] == 'x':
+                output += ' '
+            else:
+                output += board[i][j]
+        output += ','
+
+'''
 Helper methods
 '''
 
